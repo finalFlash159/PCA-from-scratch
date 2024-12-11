@@ -1,0 +1,44 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+# Python tạo các tệp biên dịch bytecode tự động, nhưng chúng không cần được thêm vào repo.
+
+# Virtual environment folders
+venv/
+.env/
+# Thư mục của môi trường ảo hoặc các tệp cấu hình môi trường không cần lưu trong repo vì chúng phụ thuộc vào hệ thống người dùng.
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Nếu bạn sử dụng Jupyter Notebook để thử nghiệm, checkpoints tự động sẽ được lưu, nhưng không cần trong repo.
+
+# System-specific files
+.DS_Store
+Thumbs.db
+# Tệp hệ thống không liên quan đến dự án.
+
+# IDE settings
+.idea/
+.vscode/
+# Các cài đặt dự án của IDE như PyCharm hoặc VS Code không cần thiết cho repo.
+
+# Test output or temporary files
+*.log
+*.tmp
+# Bỏ qua tệp nhật ký hoặc tệp tạm thời được tạo trong quá trình phát triển.
+
+# Data files
+data/
+*.csv
+*.tsv
+# Nếu dữ liệu lớn hoặc không cần thiết, bạn có thể bỏ qua. Tuy nhiên, nếu cần dùng dữ liệu để chạy thử nghiệm, hãy lưu dữ liệu nhỏ hoặc công khai và chỉ định trong README cách tái tạo dữ liệu.
+
+# Cached files and libraries
+*.cache
+*.pkl
+
+# Python egg files
+*.egg-info/
+dist/
+build/
+# Nếu bạn đóng gói hoặc phân phối dự án, các tệp này không cần được đưa vào repo.
