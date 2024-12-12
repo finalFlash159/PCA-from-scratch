@@ -17,6 +17,7 @@ def split_dataset(df):
     returns: X (pd.DataFrame): the features
              y (pd.Series): the target
     """
+    df = df.iloc[:, 1:]
     X = df.drop(columns=['Genotypes'])
     y = df['Genotypes']
     return X, y
@@ -29,6 +30,15 @@ def standardize(df):
     """
     standardized = (df - df.mean()) / df.std()
     return standardized
+
+def count_columns(df):
+    """
+    Count the number of columns in a DataFrame.
+    args: df (pd.DataFrame): the input DataFrame
+    returns: n_columns (int): the number of columns
+    """
+    n_columns = df.shape[1]
+    return n_columns
 
 # mean columns in dataframe
 def mean_columns(df):
@@ -83,11 +93,10 @@ def fit_transform(df, n_components):
           n_components (int): the number of principal components to keep
     returns: transformed (pd.DataFrame): the transformed DataFrame
     """
-    X, y = split_dataset(df)
-    values, vectors = eigen_decomposition(X)
+    values, vectors = eigen_decomposition(df)
     sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
     W = sorted_vectors[:, :n_components]
-    transformed = X @ W
+    transformed = df @ W
     return transformed
 
 def cumulative_variance_ratio(df, n_components):
@@ -97,8 +106,7 @@ def cumulative_variance_ratio(df, n_components):
           n_components (int): the number of principal components to keep
     returns: cumulative_variance (float): the cumulative variance ratio
     """
-    X, y = split_dataset(df)
-    values, vectors = eigen_decomposition(X)
+    values, vectors = eigen_decomposition(df)
     sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
     cumulative_variance = sum(sorted_values[:n_components]) / sum(sorted_values)
     return cumulative_variance
@@ -110,8 +118,20 @@ def explained_variance_ratio(df, n_components):
           n_components (int): the number of principal components to keep
     returns: explained_variance (np.array): the explained variance ratio
     """
-    X, y = split_dataset(df)
-    values, vectors = eigen_decomposition(X)
+    values, vectors = eigen_decomposition(df)
     sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
     explained_variance = sorted_values[:n_components] / sum(sorted_values)
     return explained_variance
+
+# choose n_components base on threshold
+def choose_n_components(df, threshold):
+    """
+    Choose the number of principal components based on a threshold.
+    args: df (pd.DataFrame): the input DataFrame
+          threshold (float): the threshold for the cumulative variance ratio
+    returns: n_components (int): the number of principal components to keep
+    """
+    n_components = 1
+    while cumulative_variance_ratio(df, n_components) < threshold:
+        n_components += 1
+    return n_components
