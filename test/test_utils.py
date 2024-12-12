@@ -3,7 +3,7 @@ import os
 
 # Thêm thư mục gốc vào sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.utils import load_csv, mean_columns, covariance_matrix, split_dataset, eigen_decomposition
+from src.utils import load_csv, mean_columns, covariance_matrix, split_dataset, eigen_decomposition, sort_eigenvalues
 
 # Import load_csv function from src.utils
 file_path = 'data/wine.csv'
@@ -17,6 +17,11 @@ print(y.head())
 
 # cov_matrix = covariance_matrix(data)
 # print(cov_matrix)
+
 values, vectors = eigen_decomposition(X)
-print(values)
-print(vectors)
+# print(values)
+# print(vectors)
+
+sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
+print(sorted_values)
+print(sorted_vectors)

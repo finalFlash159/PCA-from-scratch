@@ -52,3 +52,17 @@ def eigen_decomposition(df):
     cov = covariance_matrix(df)
     eig_vals, eig_vecs = np.linalg.eig(cov)
     return eig_vals, eig_vecs
+
+def sort_eigenvalues(eigenvalues, eigenvectors):
+    """
+    Sort the eigenvalues and eigenvectors in descending order.
+    args: eigenvalues (np.array): the eigenvalues to sort
+          eigenvectors (np.array): the eigenvectors to sort
+    returns: sorted_eigenvalues (np.array): the sorted eigenvalues
+             sorted_eigenvectors (np.array): the sorted eigenvectors
+    """
+    # Sort the eigenvalues and eigenvectors in descending order
+    idx = eigenvalues.argsort()[::-1]
+    sorted_eigenvalues = eigenvalues[idx]
+    sorted_eigenvectors = eigenvectors[:, idx]
+    return sorted_eigenvalues, sorted_eigenvectors
