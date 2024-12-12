@@ -23,15 +23,23 @@ print(X_standardized.head())
 n_columns = count_columns(X)
 print(f"Number of columns: {n_columns}") #17
 
+# Calculate cumulative variance ratio
+cum_variance_ratio = cumulative_variance_ratio(X_standardized, n_components=17)
+print("Comulative variance ratio: ", cum_variance_ratio)
 
-# calculate cụmulative variance ratio
-cumulative_variance_ratio = explained_variance_ratio(X_standardized, n_components=18)
-print("Explained variance ratio: ", cumulative_variance_ratio)
-
-# choose n_components based on threshold = 0.95
+# Choose n_components based on threshold = 0.95
 n_components = choose_n_components(X_standardized, threshold=0.95)
 print("Number of components: ", n_components) # 14
+
+# Calculate explained variance ratio
+explained_variance_ratio = explained_variance_ratio(X_standardized, n_components)
+print("Explained variance ratio: ", explained_variance_ratio)
+
+# Calculate cụmulative variance ratio
+cum_variance_ratio = cumulative_variance_ratio(X_standardized, n_components)
+print("Cumulative variance ratio: ", cum_variance_ratio)
 
 # Fit and transform the data
 X_pca = fit_transform(X_standardized, n_components)
 print(X_pca.head())
+
