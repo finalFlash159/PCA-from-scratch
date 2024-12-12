@@ -21,6 +21,15 @@ def split_dataset(df):
     y = df['Genotypes']
     return X, y
 
+def standardize(df):
+    """
+    Standardize the data in a DataFrame.
+    args: df (pd.DataFrame): the input DataFrame
+    returns: standardized (pd.DataFrame): the standardized DataFrame
+    """
+    standardized = (df - df.mean()) / df.std()
+    return standardized
+
 # mean columns in dataframe
 def mean_columns(df):
     """
@@ -66,3 +75,43 @@ def sort_eigenvalues(eigenvalues, eigenvectors):
     sorted_eigenvalues = eigenvalues[idx]
     sorted_eigenvectors = eigenvectors[:, idx]
     return sorted_eigenvalues, sorted_eigenvectors
+
+def fit_transform(df, n_components):
+    """
+    Fit the PCA model and apply the dimensionality reduction to the DataFrame.
+    args: df (pd.DataFrame): the input DataFrame
+          n_components (int): the number of principal components to keep
+    returns: transformed (pd.DataFrame): the transformed DataFrame
+    """
+    X, y = split_dataset(df)
+    values, vectors = eigen_decomposition(X)
+    sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
+    W = sorted_vectors[:, :n_components]
+    transformed = X @ W
+    return transformed
+
+def cumulative_variance_ratio(df, n_components):
+    """
+    Calculate the cumulative variance ratio of the PCA model.
+    args: df (pd.DataFrame): the input DataFrame
+          n_components (int): the number of principal components to keep
+    returns: cumulative_variance (float): the cumulative variance ratio
+    """
+    X, y = split_dataset(df)
+    values, vectors = eigen_decomposition(X)
+    sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
+    cumulative_variance = sum(sorted_values[:n_components]) / sum(sorted_values)
+    return cumulative_variance
+
+def explained_variance_ratio(df, n_components):
+    """
+    Calculate the explained variance ratio of the PCA model.
+    args: df (pd.DataFrame): the input DataFrame
+          n_components (int): the number of principal components to keep
+    returns: explained_variance (np.array): the explained variance ratio
+    """
+    X, y = split_dataset(df)
+    values, vectors = eigen_decomposition(X)
+    sorted_values, sorted_vectors = sort_eigenvalues(values, vectors)
+    explained_variance = sorted_values[:n_components] / sum(sorted_values)
+    return explained_variance
