@@ -10,7 +10,7 @@ file_path = 'data/wine.csv'
 data = load_csv(file_path)
 print(data.head())
 
-X, y = split_dataset(data)
+X, y = split_dataset(data, target_column='Genotypes')
 print(X.head())
 print(y.head())
 
