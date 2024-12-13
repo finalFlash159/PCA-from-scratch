@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+from IPython.display import Image
 
 def load_csv(path):
     """
@@ -173,7 +174,8 @@ def scatter_plot_2d_px(df, target_column):
         title="Scatter Plot",
         labels={df.columns[0]: df.columns[0], df.columns[1]: df.columns[1]}
     )
-    fig.show()
+    # Lưu đồ thị vào thư mục ./plots dưới dạng PNG
+    return fig
 
 def scatter_plot_3d(df, target_column):
     """
@@ -211,7 +213,7 @@ def scatter_plot_3d_px(df, target_column):
         title="3D Scatter Plot",
         labels={x_column: x_column, y_column: y_column, z_column: z_column}
     )
-    fig.show()
+    return fig
 
 def explained_variance_plot(df, n_components):
     """
@@ -244,7 +246,7 @@ def explained_variance_px(df, n_components):
         tickmode="array",  # Đặt chế độ hiển thị theo danh sách cụ thể
         tickvals=list(range(1, n_components + 1))  # Chỉ hiển thị các giá trị nguyên
     )
-    fig.show()
+    return fig
 
 def cumulative_variance_plot(df, n_components):
     """
@@ -277,12 +279,12 @@ def cumulative_variance_px(df, n_components):
         tickmode="array",  # Đặt chế độ hiển thị theo danh sách cụ thể
         tickvals=list(range(1, n_components + 1))  # Chỉ hiển thị các giá trị nguyên
     )
-    fig.show()
+    return fig
 
-#  exp_var_cumul = np.cumsum(pca.explained_variance_ratio_)
-
-# px.area(
-#     x=range(1, exp_var_cumul.shape[0] + 1),
-#     y=exp_var_cumul,
-#     labels={"x": "# Components", "y": "Explained Variance"}
-# )
+def save_plotly_image(fig, file_path):
+    """
+    Save a Plotly figure as an image.
+    args: fig (plotly.graph_objs.Figure): the Plotly figure
+          file_path (str): the path to save the image
+    """
+    fig.write_image(file_path)
