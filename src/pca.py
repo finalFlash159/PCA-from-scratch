@@ -12,7 +12,7 @@ data = load_csv(file_path)
 print("Column names: ", data.columns)
 
 # Split dataset
-X, y = split_dataset(data)
+X, y = split_dataset(data, target_column='Genotypes')
 print(X.columns) 
 
 # Standardize the data
